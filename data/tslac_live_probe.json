@@ -1,0 +1,265 @@
+{
+  "note": "Written by scripts/sim_live.py probe --write-fixture. Results of src/sim/B20Probe.sol run against the live token in one eth_call. test/Conformance.t.sol replays the same probe on MockB20 and requires identical bytes.",
+  "chain_id": 8453,
+  "block_number": 57048991,
+  "block_hash": "0xaba9ea1263985765d2b41e6a27862bd7cdd3e38c5eae2fb090266fcbe1e6f269",
+  "block_time_utc": "2026-11-13 20:02:53",
+  "rpc_host": "mainnet.base.org",
+  "token": "0xb2000000000000000000001e800a7f5189430cD0",
+  "symbol": "TSLAc",
+  "decimals": 8,
+  "eth_getCode": "0xef",
+  "holder": "0x7a33000372f3f028f074182ccb9d16cbeefbf920",
+  "alice": "0x00000000000000000000000000000000b20a11ce",
+  "bob": "0x00000000000000000000000000000000b20b0b00",
+  "carol": "0x00000000000000000000000000000000b20ca401",
+  "amount": "1000000",
+  "steps": [
+    {
+      "i": 0,
+      "label": "decimals()",
+      "ok": true,
+      "ret": "0x0000000000000000000000000000000000000000000000000000000000000008"
+    },
+    {
+      "i": 1,
+      "label": "totalSupply() before",
+      "ok": true,
+      "ret": "0x000000000000000000000000000000000000000000000000000000940dbeb2d7"
+    },
+    {
+      "i": 2,
+      "label": "balanceOf(alice) before",
+      "ok": true,
+      "ret": "0x0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "i": 3,
+      "label": "holder: transfer(alice, amount)",
+      "ok": true,
+      "ret": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    {
+      "i": 4,
+      "label": "balanceOf(alice)",
+      "ok": true,
+      "ret": "0x00000000000000000000000000000000000000000000000000000000000f4240"
+    },
+    {
+      "i": 5,
+      "label": "alice: transfer(bob, 0)",
+      "ok": true,
+      "ret": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    {
+      "i": 6,
+      "label": "alice: transfer(alice, 1)  to self",
+      "ok": true,
+      "ret": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    {
+      "i": 7,
+      "label": "balanceOf(alice)",
+      "ok": true,
+      "ret": "0x00000000000000000000000000000000000000000000000000000000000f4240"
+    },
+    {
+      "i": 8,
+      "label": "alice: transfer(bob, amount + 1)  over balance",
+      "ok": false,
+      "ret": "0xdb42144d00000000000000000000000000000000000000000000000000000000b20a11ce00000000000000000000000000000000000000000000000000000000000f424000000000000000000000000000000000000000000000000000000000000f4241"
+    },
+    {
+      "i": 9,
+      "label": "alice: transfer(address(0), 1)",
+      "ok": false,
+      "ret": "0x9cfea5830000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "i": 10,
+      "label": "alice: transfer(address(0), amount + 1)  over balance too",
+      "ok": false,
+      "ret": "0x9cfea5830000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "i": 11,
+      "label": "alice: transfer(token, 1)",
+      "ok": false,
+      "ret": "0x9cfea583000000000000000000000000b2000000000000000000001e800a7f5189430cd0"
+    },
+    {
+      "i": 12,
+      "label": "alice: approve(bob, 100)",
+      "ok": true,
+      "ret": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    {
+      "i": 13,
+      "label": "allowance(alice, bob)",
+      "ok": true,
+      "ret": "0x0000000000000000000000000000000000000000000000000000000000000064"
+    },
+    {
+      "i": 14,
+      "label": "bob: transferFrom(alice, carol, 40)",
+      "ok": true,
+      "ret": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    {
+      "i": 15,
+      "label": "allowance(alice, bob)",
+      "ok": true,
+      "ret": "0x000000000000000000000000000000000000000000000000000000000000003c"
+    },
+    {
+      "i": 16,
+      "label": "balanceOf(carol)",
+      "ok": true,
+      "ret": "0x0000000000000000000000000000000000000000000000000000000000000028"
+    },
+    {
+      "i": 17,
+      "label": "bob: transferFrom(alice, carol, 61)  over allowance",
+      "ok": false,
+      "ret": "0x192b9e4e00000000000000000000000000000000000000000000000000000000b20b0b00000000000000000000000000000000000000000000000000000000000000003c000000000000000000000000000000000000000000000000000000000000003d"
+    },
+    {
+      "i": 18,
+      "label": "carol: transferFrom(alice, carol, 1)  no allowance",
+      "ok": false,
+      "ret": "0x192b9e4e00000000000000000000000000000000000000000000000000000000b20ca40100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001"
+    },
+    {
+      "i": 19,
+      "label": "alice: transferFrom(alice, bob, 1)  owner as spender",
+      "ok": false,
+      "ret": "0x192b9e4e00000000000000000000000000000000000000000000000000000000b20a11ce00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001"
+    },
+    {
+      "i": 20,
+      "label": "bob: transferFrom(alice, address(0), 1)",
+      "ok": false,
+      "ret": "0x9cfea5830000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "i": 21,
+      "label": "bob: transferFrom(alice, token, 1)",
+      "ok": false,
+      "ret": "0x9cfea583000000000000000000000000b2000000000000000000001e800a7f5189430cd0"
+    },
+    {
+      "i": 22,
+      "label": "carol: transferFrom(alice, address(0), 1)  no allowance too",
+      "ok": false,
+      "ret": "0x9cfea5830000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "i": 23,
+      "label": "carol: transferFrom(alice, carol, 2 x amount)  no allowance, over balance",
+      "ok": false,
+      "ret": "0x192b9e4e00000000000000000000000000000000000000000000000000000000b20ca401000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001e8480"
+    },
+    {
+      "i": 24,
+      "label": "allowance(alice, bob)  unchanged by the failures",
+      "ok": true,
+      "ret": "0x000000000000000000000000000000000000000000000000000000000000003c"
+    },
+    {
+      "i": 25,
+      "label": "alice: approve(bob, max)",
+      "ok": true,
+      "ret": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    {
+      "i": 26,
+      "label": "bob: transferFrom(alice, carol, 10)",
+      "ok": true,
+      "ret": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    {
+      "i": 27,
+      "label": "allowance(alice, bob)  after spending from max",
+      "ok": true,
+      "ret": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "i": 28,
+      "label": "bob: transferFrom(alice, carol, amount)  max allowance, over balance",
+      "ok": false,
+      "ret": "0xdb42144d00000000000000000000000000000000000000000000000000000000b20a11ce00000000000000000000000000000000000000000000000000000000000f420e00000000000000000000000000000000000000000000000000000000000f4240"
+    },
+    {
+      "i": 29,
+      "label": "alice: approve(bob, 0)",
+      "ok": true,
+      "ret": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    {
+      "i": 30,
+      "label": "allowance(alice, bob)",
+      "ok": true,
+      "ret": "0x0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "i": 31,
+      "label": "alice: approve(address(0), 1)",
+      "ok": false,
+      "ret": "0x4e15efda0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "i": 32,
+      "label": "alice: transferFrom(address(0), bob, 0)",
+      "ok": false,
+      "ret": "0x4c14f64c0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "i": 33,
+      "label": "alice: transferFrom(address(0), bob, 1)",
+      "ok": false,
+      "ret": "0x4c14f64c0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "i": 34,
+      "label": "alice: transferFrom(address(0), address(0), 1)",
+      "ok": false,
+      "ret": "0x9cfea5830000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "i": 35,
+      "label": "alice: call with unknown selector 0xdeadbeef",
+      "ok": false,
+      "ret": "0xdeadbeef"
+    },
+    {
+      "i": 36,
+      "label": "alice: call with empty calldata",
+      "ok": false,
+      "ret": "0x00000000"
+    },
+    {
+      "i": 37,
+      "label": "alice: call with one byte of calldata 0xde",
+      "ok": false,
+      "ret": "0x00000000"
+    },
+    {
+      "i": 38,
+      "label": "balanceOf(alice) at the end",
+      "ok": true,
+      "ret": "0x00000000000000000000000000000000000000000000000000000000000f420e"
+    },
+    {
+      "i": 39,
+      "label": "balanceOf(carol) at the end",
+      "ok": true,
+      "ret": "0x0000000000000000000000000000000000000000000000000000000000000032"
+    },
+    {
+      "i": 40,
+      "label": "totalSupply() at the end",
+      "ok": true,
+      "ret": "0x000000000000000000000000000000000000000000000000000000940dbeb2d7"
+    }
+  ]
+}

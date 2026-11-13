@@ -1,0 +1,44 @@
+{
+  "source_csv": "tsla_feed_rounds.csv",
+  "phase": 2,
+  "rounds": 1407,
+  "first_round_utc": "Wed 2026-08-05 21:21:57",
+  "last_round_utc": "Fri 2026-11-13 16:56:49",
+  "days": 99.8,
+  "weekends": 14,
+  "weekends_with_gap_of_48h_or_more": 14,
+  "weekends_with_no_round_between_friday_close_and_reopen": 9,
+  "weekends_where_first_round_is_within_2_min_of_sunday_8pm_new_york": 13,
+  "weekend_gap_hours_min": 49.0,
+  "weekend_gap_hours_max": 75.97,
+  "weekend_gap_hours_median": 52.66,
+  "largest_weekend_move_bps": 123.8,
+  "stale_share": {
+    "1": {
+      "all_time_pct": 72.8,
+      "outside_weekend_gaps_pct": 60.9
+    },
+    "4": {
+      "all_time_pct": 45.4,
+      "outside_weekend_gaps_pct": 23.3
+    },
+    "12": {
+      "all_time_pct": 26.2,
+      "outside_weekend_gaps_pct": 2.0
+    },
+    "24": {
+      "all_time_pct": 17.9,
+      "outside_weekend_gaps_pct": 0.0
+    }
+  },
+  "longest_non_weekend_gap_hours": 18.6,
+  "longest_non_weekend_gap_from_utc": "Wed 2026-08-26 19:01:57",
+  "longest_non_weekend_gap_to_utc": "Thu 2026-08-27 13:40:33",
+  "step_bps": {
+    "p5": 50.2,
+    "median": 53.4,
+    "p95": 74.3,
+    "max": 203.1,
+    "share_50bps_or_more_pct": 99.1
+  }
+}

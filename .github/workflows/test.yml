@@ -1,0 +1,44 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # The fresh-install check: a clean runner, the current stable Foundry, no cache, no network to Base.
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          cache: false
+      - run: forge --version
+      - run: forge build
+      - run: forge test -vv
+      - name: The gap report reproduces the checked-in numbers
+        run: |
+          python3 scripts/feed_gaps.py
+          git diff --exit-code -- data/
+
+  # Talks to public Base RPCs, which can rate-limit a shared runner, so a failure here does not fail the run.
+  live:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          cache: false
+      - run: forge build
+      - name: Probe the real TSLAc precompile and compare with the recording
+        run: python3 scripts/sim_live.py probe --no-build
+      - name: Escrow example against the real precompile
+        run: python3 scripts/sim_live.py escrow --no-build
+      - name: Fork tests
+        run: FORK_TESTS=1 forge test --match-contract ForkTest -vv

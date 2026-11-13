@@ -1,0 +1,14 @@
+# build output
+out/
+cache/
+broadcast/
+
+# python
+__pycache__/
+*.pyc
+
+# local only, never published
+/PUBLISH.cmd
+/PUBLISH.log
+/POST_DRAFT.md
+/.omc/
