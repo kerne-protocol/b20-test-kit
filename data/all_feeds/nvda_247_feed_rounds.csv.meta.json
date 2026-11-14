@@ -1,0 +1,18 @@
+{
+  "feed": "0x48D9731AF6cc55b879FE76a4Bd1A6c2C0bDaf944",
+  "description": "Coinbase NVDA (24/7)",
+  "decimals": 8,
+  "chain_id": 8453,
+  "block_number": 57437566,
+  "block_hash": "0x6010de47ac8041071ec39a5625af16de419231159c1b5a7ff0b44d220076a9a3",
+  "block_time_utc": "2026-11-14 17:38:08",
+  "rpc_host": "mainnet.base.org",
+  "latest_round_id": "18446744073709552115",
+  "rounds_per_phase": {
+    "1": 499
+  },
+  "rows": 499,
+  "first_round_utc": "2026-11-04 22:51:03",
+  "last_round_utc": "2026-11-14 16:47:14",
+  "rounds_with_timestamp_before_previous": 0
+}

@@ -1,0 +1,19 @@
+{
+  "feed": "0x5bF49E0ffA937CE2FfF033c739aD7C634c4D34F2",
+  "description": "Coinbase GOOGL",
+  "decimals": 8,
+  "chain_id": 8453,
+  "block_number": 57437094,
+  "block_hash": "0xa476a94abecfc872c22836c86c14d0c8be3633bd1308a5015e228b5e1aec352f",
+  "block_time_utc": "2026-11-14 17:36:34",
+  "rpc_host": "mainnet.base.org",
+  "latest_round_id": "36893488147419104015",
+  "rounds_per_phase": {
+    "1": 92,
+    "2": 783
+  },
+  "rows": 875,
+  "first_round_utc": "2026-08-03 15:46:05",
+  "last_round_utc": "2026-11-13 15:37:14",
+  "rounds_with_timestamp_before_previous": 1
+}

@@ -1,0 +1,19 @@
+{
+  "feed": "0x408e44f504A7371a345F03a73dDC96A4b48e8aa7",
+  "description": "Coinbase COIN",
+  "decimals": 8,
+  "chain_id": 8453,
+  "block_number": 57436978,
+  "block_hash": "0xb93412a5968e584667a7e413281f17bf2627dc88a3080b35e7174430d55ce6fc",
+  "block_time_utc": "2026-11-14 17:36:11",
+  "rpc_host": "mainnet.base.org",
+  "latest_round_id": "36893488147419106313",
+  "rounds_per_phase": {
+    "1": 262,
+    "2": 3081
+  },
+  "rows": 3343,
+  "first_round_utc": "2026-08-03 15:46:39",
+  "last_round_utc": "2026-11-13 23:07:06",
+  "rounds_with_timestamp_before_previous": 1
+}

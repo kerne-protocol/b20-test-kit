@@ -1,0 +1,19 @@
+{
+  "feed": "0xeB10A6c9aa7E537aEd766C08c35Dae35B321b18c",
+  "description": "Coinbase MSFT",
+  "decimals": 8,
+  "chain_id": 8453,
+  "block_number": 57437225,
+  "block_hash": "0xbd974bf3ce3e5d855cf6aa04018ee8853e97718c1f55f501dba70abeb99d03a7",
+  "block_time_utc": "2026-11-14 17:37:00",
+  "rpc_host": "mainnet.base.org",
+  "latest_round_id": "36893488147419103961",
+  "rounds_per_phase": {
+    "1": 84,
+    "2": 729
+  },
+  "rows": 813,
+  "first_round_utc": "2026-08-03 15:46:05",
+  "last_round_utc": "2026-11-13 21:03:29",
+  "rounds_with_timestamp_before_previous": 1
+}

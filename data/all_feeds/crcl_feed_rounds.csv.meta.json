@@ -1,0 +1,19 @@
+{
+  "feed": "0x0231cF2635D1E17bB5c2462cc7504Ba1fBd61f33",
+  "description": "Coinbase CRCL",
+  "decimals": 8,
+  "chain_id": 8453,
+  "block_number": 57437031,
+  "block_hash": "0xa3160d8c47298eeb53d9c8c5c518ec67247c6ea14f5adbb20b5e9395e53a0451",
+  "block_time_utc": "2026-11-14 17:36:21",
+  "rpc_host": "mainnet.base.org",
+  "latest_round_id": "36893488147419107327",
+  "rounds_per_phase": {
+    "1": 570,
+    "2": 4095
+  },
+  "rows": 4665,
+  "first_round_utc": "2026-08-03 15:46:05",
+  "last_round_utc": "2026-11-14 00:34:26",
+  "rounds_with_timestamp_before_previous": 1
+}

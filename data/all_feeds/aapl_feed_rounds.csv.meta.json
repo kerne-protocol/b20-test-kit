@@ -1,0 +1,19 @@
+{
+  "feed": "0x787f13dEa48Db0897CbCDD985de77809D837F988",
+  "description": "Coinbase AAPL",
+  "decimals": 8,
+  "chain_id": 8453,
+  "block_number": 57436913,
+  "block_hash": "0x4e72c053afa8180769fcd668acebf41b0b665dfcea8aaac9a1fb7a443680fe75",
+  "block_time_utc": "2026-11-14 17:35:58",
+  "rpc_host": "mainnet.base.org",
+  "latest_round_id": "36893488147419103786",
+  "rounds_per_phase": {
+    "1": 73,
+    "2": 554
+  },
+  "rows": 627,
+  "first_round_utc": "2026-08-03 15:46:41",
+  "last_round_utc": "2026-11-13 21:05:53",
+  "rounds_with_timestamp_before_previous": 1
+}

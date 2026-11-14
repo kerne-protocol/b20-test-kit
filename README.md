@@ -1,7 +1,8 @@
 # b20-test-kit
 
 Small test tools for contracts that hold Coinbase tokenized stocks on Base, plus three months of
-recorded Chainlink rounds for the TSLA feed and what they show about weekends.
+recorded Chainlink rounds for the stock feeds, what they show about weekends, and a small Solidity
+library that tells a contract whether a feed is frozen and when it resumes.
 
 It works with stock Foundry and a public RPC. No API key, no private key, nothing to sign.
 
@@ -213,8 +214,106 @@ python scripts/feed_rounds.py --feed 0x787f13dEa48Db0897CbCDD985de77809D837F988 
 python scripts/feed_gaps.py data/aapl_feed_rounds.csv
 ```
 
-We ran the same two commands on the Coinbase AAPL feed on 2026-11-13 and saw the same pattern
-(14 of 14 weekends silent). Only the TSLA data is checked in.
+The same read for all 13 regular feeds, taken on 2026-11-14, is in `data/all_feeds`. Every one shows
+the same pattern. The next section uses it.
+
+## 4. Is the feed frozen right now?
+
+Base's docs say it plainly: off-hours the feed "stops updating and holds the last value", and you
+should "never settle or liquidate against a frozen feed". `latestRoundData()` keeps answering through
+a closure, so a contract has to know the schedule itself. This kit has the schedule in three forms
+that are tested against each other, and the measurements behind it.
+
+**In a contract: `src/StockFeedGuard.sol`.** One library file, no imports, MIT.
+
+```solidity
+import {StockFeedGuard} from "b20-test-kit/src/StockFeedGuard.sol";
+
+// Strictest read. Reverts with FeedClosed(reopensAt) on a weekend or market holiday,
+// FeedStale(updatedAt, maxAge) when the newest round is too old, FeedAnswerNotPositive(answer) on a
+// bad answer, and FeedNotResumed(updatedAt, openedAt) until the feed has printed since the reopen.
+(uint256 price, uint256 updatedAt) = StockFeedGuard.readSinceReopen(feed, 25 hours);
+
+// The same without the last check. See the note below before choosing this one.
+(price, updatedAt) = StockFeedGuard.read(feed, 25 hours);
+
+// The schedule alone is a pure function of a timestamp, so it also works for a future expiry.
+bool open = StockFeedGuard.isOpen(expiry);
+uint256 resumesAt = StockFeedGuard.nextOpen(block.timestamp);
+uint256 stopsAt = StockFeedGuard.nextClose(block.timestamp);
+```
+
+The two reads differ in one case: a one-day holiday. The schedule reopens 24 hours after it closed,
+so a round written in the last hour before the holiday is still under a 25 hour `maxAge` for up to an
+hour after the reopen. `read` returns it, and that price is from before the holiday. If the market
+has moved less than 0.5% since, the feed may simply not have printed and the price is still close.
+If the feed has not resumed, it is not. `read` cannot tell the two apart; `readSinceReopen` refuses
+both and waits for a round. After a weekend the two behave the same for any `maxAge` under 48 hours.
+`check` runs the tests of `read` without reverting, for keepers and views. `test/StockFeedGuard.t.sol`
+has 13 tests, including this case and the recorded rounds below.
+
+**Over HTTP: `https://kerne.fi/quotes/api/feed-status`.** Free, read-only, no key. For each of the 13
+feeds: `LIVE`, `FROZEN_SCHEDULED`, `RESUMING`, `STALE_UNEXPECTED` or `UNKNOWN`, the newest round and
+its age, and the expected reopen. One feed: `/quotes/api/feed-status/TSLA`. The holiday table:
+`/quotes/api/feed-status/calendar`. A page for people: `https://kerne.fi/quotes/feed-status`.
+
+**Offline: `python scripts/market_calendar.py`.** Standard library only. Prints the state now, the next
+close and the next reopen, or the same for any unix time. `--selftest` rebuilds the holiday table from
+the holiday rules (third Monday, Good Friday from the Easter date, and so on) and compares.
+
+The model, in New York time:
+
+- A trading day runs from 20:00 the evening before to 20:00 on the day.
+- Trading days are Monday to Friday, minus the full-day holidays of the New York Stock Exchange
+  (the table covers 2026 to 2028).
+- So the feed is expected to be silent from Friday 20:00 to Sunday 20:00, and from 20:00 before a
+  holiday to 20:00 on it. In UTC a week runs Monday 00:00 to Saturday 00:00 in daylight time and
+  Monday 01:00 to Saturday 01:00 in standard time.
+- An early-close day ends at 17:00, when the exchange's late session ends.
+
+What the recorded rounds say (`data/all_feeds`, read on 2026-11-14, every round of all 13 regular
+feeds since their current aggregators started on 2026-08-05; `python scripts/closure_gaps.py` prints
+this from the checked-in files):
+
+| Measure | Value |
+| - | - |
+| Feeds, rounds | 13 feeds, 28,887 rounds |
+| Calendar closures inside the data | 14 weekends, one of them the Labor Day long weekend (2026-09-07), one the November clock change |
+| The same counted per feed | 182 |
+| Closures with no round at all inside | 181 of 182 |
+| Rounds that landed inside a modelled closure | 1 of 28,887 (Coinbase COIN, 5 seconds after Friday 20:00 on 2026-08-21) |
+| Time the price was held across a closure | 48.0 to 81.6 hours, median 52.3 |
+| First round after the modelled reopen | 19 to 99 seconds later, on all 182 |
+| Last round before the modelled close | median 4.1 hours before it; closest 22 seconds before it |
+| Longest gap between rounds while the schedule said open | 24.0 hours (the feeds' heartbeat) |
+| Largest price step across a closure | 4.1% |
+
+The 13 feeds move together, so read this as 14 calendar events seen 13 times, not as 182 independent
+ones. One holiday and one clock change are in it. The 4,087 rounds of the older aggregators
+(2026-08-03 to 2026-08-14) are in the files but not in the table; none of them falls inside a
+modelled closure either.
+
+`data/all_feeds/closure_gaps.csv` has one row per feed per closure. The three "(24/7)" feeds that
+exist (GOOGL, NVDA, TSLA) are in the folder too: they print through the weekend, so this model is not
+for them.
+
+What this is not:
+
+- **It is a schedule, so it is informational.** It cannot see a trading halt, a corporate-action
+  pause (Base's docs: the feed freezes until Coinbase confirms the new price and multiplier), an
+  unscheduled closure or an outage. `isOpen` can be true while a price is frozen. `maxAge` is the part
+  that catches those: with a 24 hour heartbeat, a round older than about 25 hours in an open session
+  means something is wrong.
+- **Two rules are not measured yet.** No early-close day and no one-day midweek holiday has happened
+  since the feeds launched. The first are Thanksgiving, 2026-11-26, and the early close the day after.
+  Those rules follow the exchange's published hours and may need a correction afterwards.
+- **The holiday table ends on 2028-12-31.** After that only weekends are modelled: on a 2029 holiday
+  `isOpen` is true and `read` relies on `maxAge` alone. Nothing reverts for you. Check
+  `holidaysKnown(block.timestamp)` if you would rather stop, and plan to redeploy with a new table.
+  An exchange can also add a closure at short notice.
+- **It does not check the sequencer.** A sequencer outage stops rounds too. Add Base's sequencer uptime
+  feed if your protocol needs it.
+- Not audited.
 
 ## On a local anvil fork
 
@@ -235,8 +334,10 @@ The script only talks to a local anvil on chain 8453 and uses anvil's impersonat
   deploy them to a live network.
 - The live probe ran on TSLAc only. Other B20 tokens can carry different policies and decimals.
 - The pause and policy behaviour of the mock comes from the docs, as the table above says.
-- The feed data is a snapshot taken at Base block 57036280. The feed can change. Re-run the two
-  scripts before you rely on a number.
+- The feed data is a snapshot: the TSLA file at Base block 57036280, `data/all_feeds` at the blocks in
+  its `.meta.json` files. A feed can change. Re-run the scripts before you rely on a number.
+- `StockFeedGuard` is a schedule plus a staleness check. Read the "What this is not" list in section 4
+  before you put it in front of money.
 - Tested with Foundry 1.5.1 on Windows. CI runs the tests on a fresh install of the current stable
   Foundry on Linux at every push.
 - Not affiliated with Base, Coinbase or Chainlink.

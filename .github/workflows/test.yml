@@ -21,9 +21,12 @@ jobs:
       - run: forge --version
       - run: forge build
       - run: forge test -vv
-      - name: The gap report reproduces the checked-in numbers
+      - name: The gap reports and the calendar vectors reproduce the checked-in files
         run: |
           python3 scripts/feed_gaps.py
+          python3 scripts/market_calendar.py --selftest
+          python3 scripts/market_calendar.py --vectors
+          python3 scripts/closure_gaps.py
           git diff --exit-code -- data/
 
   # Talks to public Base RPCs, which can rate-limit a shared runner, so a failure here does not fail the run.

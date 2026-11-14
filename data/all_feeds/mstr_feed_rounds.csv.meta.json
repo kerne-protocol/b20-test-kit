@@ -1,0 +1,19 @@
+{
+  "feed": "0xB3cE282CD188b35DA0E38D8Bc7d58e33173D202a",
+  "description": "Coinbase MSTR",
+  "decimals": 8,
+  "chain_id": 8453,
+  "block_number": 57437258,
+  "block_hash": "0xbcb96bf7676b7baee217188beac2e77b92dff9ac7e733f2c556fa448e168102d",
+  "block_time_utc": "2026-11-14 17:37:07",
+  "rpc_host": "mainnet.base.org",
+  "latest_round_id": "36893488147419107360",
+  "rounds_per_phase": {
+    "1": 314,
+    "2": 4128
+  },
+  "rows": 4442,
+  "first_round_utc": "2026-08-03 15:46:43",
+  "last_round_utc": "2026-11-14 00:33:43",
+  "rounds_with_timestamp_before_previous": 1
+}

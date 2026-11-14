@@ -1,0 +1,19 @@
+{
+  "feed": "0x06A8E4b3aBB3B7543d8396FB2B763d22820cB295",
+  "description": "Coinbase AMZN",
+  "decimals": 8,
+  "chain_id": 8453,
+  "block_number": 57436944,
+  "block_hash": "0x2a8bc07bb62c77dfacf044c16fbb736ca04b110d86f63ada985186be1b1cd673",
+  "block_time_utc": "2026-11-14 17:36:04",
+  "rpc_host": "mainnet.base.org",
+  "latest_round_id": "36893488147419104064",
+  "rounds_per_phase": {
+    "1": 80,
+    "2": 832
+  },
+  "rows": 912,
+  "first_round_utc": "2026-08-03 15:46:03",
+  "last_round_utc": "2026-11-13 21:04:28",
+  "rounds_with_timestamp_before_previous": 1
+}

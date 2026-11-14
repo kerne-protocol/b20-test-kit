@@ -1,0 +1,19 @@
+{
+  "feed": "0x388b0dC46C0Fb05A74BeE0994fa5b02c6Fcca2eA",
+  "description": "Coinbase SNDK",
+  "decimals": 8,
+  "chain_id": 8453,
+  "block_number": 57437355,
+  "block_hash": "0x629f6196c3307b8272dbfd9c832700a6ef874f89c2bb9a631cae879ae27d150f",
+  "block_time_utc": "2026-11-14 17:37:26",
+  "rpc_host": "mainnet.base.org",
+  "latest_round_id": "36893488147419107913",
+  "rounds_per_phase": {
+    "1": 973,
+    "2": 4681
+  },
+  "rows": 5654,
+  "first_round_utc": "2026-08-03 15:47:17",
+  "last_round_utc": "2026-11-13 22:29:24",
+  "rounds_with_timestamp_before_previous": 1
+}

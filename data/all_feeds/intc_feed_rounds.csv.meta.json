@@ -1,0 +1,19 @@
+{
+  "feed": "0xAB657C39bac0D5886250D70849e2E3E008F2EECB",
+  "description": "Coinbase INTC",
+  "decimals": 8,
+  "chain_id": 8453,
+  "block_number": 57437130,
+  "block_hash": "0xc7e7b25818bed8d3c2881442838976c7f679a25b8eebb57e6761e02ceab3c2db",
+  "block_time_utc": "2026-11-14 17:36:41",
+  "rpc_host": "mainnet.base.org",
+  "latest_round_id": "36893488147419106594",
+  "rounds_per_phase": {
+    "1": 469,
+    "2": 3362
+  },
+  "rows": 3831,
+  "first_round_utc": "2026-08-03 15:46:41",
+  "last_round_utc": "2026-11-13 22:40:02",
+  "rounds_with_timestamp_before_previous": 1
+}

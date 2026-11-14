@@ -1,0 +1,19 @@
+{
+  "feed": "0x6A634B235903C4ad6376892180d6fF8612e3Fa68",
+  "description": "Coinbase SPCX",
+  "decimals": 8,
+  "chain_id": 8453,
+  "block_number": 57437429,
+  "block_hash": "0x3dca931a3ddf1a76078dd68b433de14eb50e8f001b7851ce4b4350744d568f2c",
+  "block_time_utc": "2026-11-14 17:37:41",
+  "rpc_host": "mainnet.base.org",
+  "latest_round_id": "36893488147419105841",
+  "rounds_per_phase": {
+    "1": 784,
+    "2": 2609
+  },
+  "rows": 3393,
+  "first_round_utc": "2026-08-03 15:47:07",
+  "last_round_utc": "2026-11-13 23:40:59",
+  "rounds_with_timestamp_before_previous": 1
+}

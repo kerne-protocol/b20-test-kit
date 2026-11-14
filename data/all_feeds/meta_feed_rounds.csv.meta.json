@@ -1,0 +1,19 @@
+{
+  "feed": "0x6526aE6797A76123638b863AeE4dD27Ba4E4b27D",
+  "description": "Coinbase META",
+  "decimals": 8,
+  "chain_id": 8453,
+  "block_number": 57437189,
+  "block_hash": "0x63d841fabd740a3bcbaa7266f21743fa6915d4f0d97a7db7dd8d582ed763872c",
+  "block_time_utc": "2026-11-14 17:36:53",
+  "rpc_host": "mainnet.base.org",
+  "latest_round_id": "36893488147419104559",
+  "rounds_per_phase": {
+    "1": 124,
+    "2": 1327
+  },
+  "rows": 1451,
+  "first_round_utc": "2026-08-03 15:47:05",
+  "last_round_utc": "2026-11-13 21:05:04",
+  "rounds_with_timestamp_before_previous": 1
+}

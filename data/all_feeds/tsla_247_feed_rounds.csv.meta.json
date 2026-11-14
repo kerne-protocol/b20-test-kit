@@ -1,0 +1,18 @@
+{
+  "feed": "0xa5Ccd0315346b9A8A1D0AFEcD7Cc4e820e405e96",
+  "description": "Coinbase TSLA (24/7)",
+  "decimals": 8,
+  "chain_id": 8453,
+  "block_number": 57437588,
+  "block_hash": "0x6e7973db3ca89a0f3a970797b508fc81b93fd7931114b25d60a6722cc084669f",
+  "block_time_utc": "2026-11-14 17:38:13",
+  "rpc_host": "mainnet.base.org",
+  "latest_round_id": "18446744073709551779",
+  "rounds_per_phase": {
+    "1": 163
+  },
+  "rows": 163,
+  "first_round_utc": "2026-11-05 23:32:05",
+  "last_round_utc": "2026-11-14 16:38:43",
+  "rounds_with_timestamp_before_previous": 0
+}
